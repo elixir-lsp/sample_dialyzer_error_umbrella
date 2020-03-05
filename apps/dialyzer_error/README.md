@@ -1,0 +1,3 @@
+# DialyzerError
+
+**TODO: Add description**
