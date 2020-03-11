@@ -35,7 +35,9 @@ defmodule DialyzerError.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    []
+    [
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
