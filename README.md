@@ -1,14 +1,11 @@
 # DialyzerError.Umbrella
 
-If you open `apps/dialyzer_error/lib/a.ex` in an editor running ElixirLS and wait for Dialyzer to finish running, then you should see the following errors:
+If you open `apps/dialyzer_error/lib/a.ex` in an editor running ElixirLS and wait for the first build to finish running, then you should see the following error:
 
 ```
- a.ex       2   3 warning         Function fun/0 has no local return. (lsp)
- a.ex       4   5 warning         The pattern can never match the type.
+`
+ b.ex       5   3 error           (SyntaxError) unexpected token: end. The "(" at line 4 is missing terminator ")"
 
- Pattern:
- :ok
-
- Type:
- :error
+ Stacktrace:
+   │ (elixir 1.10.2) lib/kernel/parallel_compiler.ex:304: anonymous fn/4 in Kernel.ParallelCompiler.spawn_workers/7 (lsp)
 ```
