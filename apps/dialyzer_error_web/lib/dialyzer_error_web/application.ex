@@ -5,13 +5,15 @@ defmodule DialyzerErrorWeb.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
+      # Start the Telemetry supervisor
+      DialyzerErrorWeb.Telemetry,
+      # Start the Endpoint (http/https)
       DialyzerErrorWeb.Endpoint
-      # Starts a worker by calling: DialyzerErrorWeb.Worker.start_link(arg)
-      # {DialyzerErrorWeb.Worker, arg},
+      # Start a worker by calling: DialyzerErrorWeb.Worker.start_link(arg)
+      # {DialyzerErrorWeb.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -22,6 +24,7 @@ defmodule DialyzerErrorWeb.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     DialyzerErrorWeb.Endpoint.config_change(changed, removed)
     :ok

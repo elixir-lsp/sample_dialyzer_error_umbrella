@@ -5,9 +5,13 @@ defmodule DialyzerError.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
     children = [
-      # DialyzerError.Worker
+      # Start the PubSub system
+      {Phoenix.PubSub, name: DialyzerError.PubSub}
+      # Start a worker by calling: DialyzerError.Worker.start_link(arg)
+      # {DialyzerError.Worker, arg}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: DialyzerError.Supervisor)

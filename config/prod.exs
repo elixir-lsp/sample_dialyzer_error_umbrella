@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
@@ -19,10 +19,10 @@ config :dialyzer_error_web, DialyzerErrorWeb.Endpoint,
 # to the previous section and set your `:url` port to 443:
 #
 #     config :dialyzer_error_web, DialyzerErrorWeb.Endpoint,
-#       ...
+#       ...,
 #       url: [host: "example.com", port: 443],
 #       https: [
-#         :inet6,
+#         ...,
 #         port: 443,
 #         cipher_suite: :strong,
 #         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
@@ -49,7 +49,3 @@ config :dialyzer_error_web, DialyzerErrorWeb.Endpoint,
 
 # Do not print debug messages in production
 config :logger, level: :info
-
-# Finally import the config/prod.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "prod.secret.exs"
