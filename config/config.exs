@@ -1,15 +1,25 @@
 # This file is responsible for configuring your umbrella
 # and **all applications** and their dependencies with the
-# help of Mix.Config.
+# help of the Config module.
 #
 # Note that all applications in your umbrella share the
 # same configuration and dependencies, which is why they
 # all use the same configuration file. If you want different
 # configurations or dependencies per app, it is best to
 # move said applications out of the umbrella.
-use Mix.Config
+import Config
 
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :dialyzer_error, DialyzerError.Mailer, adapter: Swoosh.Adapters.Local
 
+# Swoosh API client is needed for adapters other than SMTP.
+config :swoosh, :api_client, false
 
 config :dialyzer_error_web,
   generators: [context_app: :dialyzer_error]
@@ -17,9 +27,19 @@ config :dialyzer_error_web,
 # Configures the endpoint
 config :dialyzer_error_web, DialyzerErrorWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "A8o+7yQKk7X2As6h4Z0fC7URPqPI40E3MJGT8lCvNn+ATnXBT9GqwXUUwMoIul2J",
-  render_errors: [view: DialyzerErrorWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: DialyzerErrorWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: DialyzerErrorWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: DialyzerError.PubSub,
+  live_view: [signing_salt: "Hh/ApxcZ"]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.0",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../apps/dialyzer_error_web/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -31,4 +51,4 @@ config :phoenix, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+import_config "#{config_env()}.exs"
