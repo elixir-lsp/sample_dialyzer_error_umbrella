@@ -16,10 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - elixir: 1.10.x
-            otp: 22.3.4.20
-            tests_may_fail: false
-            check_unused_deps: true
           - elixir: 1.11.x
             otp: 23.3.4.4
             tests_may_fail: false
@@ -68,6 +64,7 @@ jobs:
         include:
           - elixir: 1.12.x
             otp: 24.0.x
+            run_dialyzer: true
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
@@ -89,5 +86,6 @@ jobs:
           mix deps.get
       - name: Restore timestamps to prevent unnecessary recompilation
         run: IFS=$'\n'; for f in $(git ls-files); do touch -d "$(git log -n 1 --pretty='%cI' -- $f)" "$f"; done
-      - run: mix dialyzer
+      - name: Mix Dialyzer
+        run: mix dialyzer
         if: matrix.run_dialyzer
