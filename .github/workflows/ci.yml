@@ -86,5 +86,6 @@ jobs:
           mix deps.get
       - name: Restore timestamps to prevent unnecessary recompilation
         run: IFS=$'\n'; for f in $(git ls-files); do touch -d "$(git log -n 1 --pretty='%cI' -- $f)" "$f"; done
-      - run: mix dialyzer
+      - name: Mix Dialyzer
+        run: mix dialyzer
         if: matrix.run_dialyzer
