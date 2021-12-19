@@ -1,4 +1,3 @@
-PR
 # DialyzerError.Umbrella
 
 If you open `apps/dialyzer_error/lib/a.ex` in an editor running ElixirLS and wait for Dialyzer to finish running, then you should see the following errors:
